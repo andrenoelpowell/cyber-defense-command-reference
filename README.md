@@ -8,110 +8,117 @@ A searchable command reference for cybersecurity operations, threat hunting, inc
 
 ## Encoding / Decoding
 
-base64 decode | echo <base64> | base64 -d
-base64 decode + detect file type | echo <base64> | base64 -d | file -
-base64 encode | echo "text" | base64
-decode url encoding | python3 -c "import urllib.parse; print(urllib.parse.unquote('STRING'))"
-decode hex | echo <hex> | xxd -r -p
-convert binary to hex | xxd file
+base64 decode | echo <base64> | base64 -d  
+base64 decode + detect file type | echo <base64> | base64 -d | file -  
+base64 encode | echo "text" | base64  
+decode url encoding | python3 -c "import urllib.parse; print(urllib.parse.unquote('STRING'))"  
+decode hex | echo <hex> | xxd -r -p  
+convert binary to hex | xxd file  
 
 ---
 
 ## PCAP Analysis
 
-extract readable strings from pcap | strings -n 10 capture.pcap
-save strings from pcap | strings -n 10 capture.pcap > capture-strings.txt
-analyze pcap with zeek | zeek -r capture.pcap
-read packets in pcap | tcpdump -r capture.pcap
-list conversations in pcap | tcpdump -r capture.pcap -nn
-extract http objects | tshark -r capture.pcap --export-objects http,files/
-show packet summary | tshark -r capture.pcap
-filter packets by IP | tshark -r capture.pcap -Y "ip.addr==192.168.1.1"
-filter http traffic | tshark -r capture.pcap -Y http
+extract readable strings from pcap | strings -n 10 capture.pcap  
+save strings from pcap | strings -n 10 capture.pcap > capture-strings.txt  
+analyze pcap with zeek | zeek -r capture.pcap  
+read packets in pcap | tcpdump -r capture.pcap  
+list conversations in pcap | tcpdump -r capture.pcap -nn  
+extract http objects | tshark -r capture.pcap --export-objects http,files/  
+show packet summary | tshark -r capture.pcap  
+filter packets by IP | tshark -r capture.pcap -Y "ip.addr==192.168.1.1"  
+filter http traffic | tshark -r capture.pcap -Y http  
 
 ---
 
 ## Zeek Analysis
 
-generate zeek logs from pcap | zeek -r capture.pcap
-view zeek connection logs | cat conn.log
-view ssl logs | cat ssl.log
-search ja3 fingerprint | grep "ja3" ssl.log
-search domain requests | grep "server_name" ssl.log
-search ip in logs | grep "192.168" conn.log
+generate zeek logs from pcap | zeek -r capture.pcap  
+view zeek connection logs | cat conn.log  
+view ssl logs | cat ssl.log  
+search ja3 fingerprint | grep "ja3" ssl.log  
+search domain requests | grep "server_name" ssl.log  
+search ip in logs | grep "192.168" conn.log  
 
 ---
-## JSON/jq Analysis
 
-pretty print json | jq .
-extract json field | jq '.field'
-extract nested field | jq '.id.orig_h'
-filter json value | jq 'select(.field=="value")'
-count json objects | jq '. | length'
-show specific fields | jq '{id.orig_h,id.resp_h}'
+## JSON / jq Analysis
+
+pretty print json | jq .  
+extract json field | jq '.field'  
+extract nested field | jq '.id.orig_h'  
+filter json value | jq 'select(.field=="value")'  
+count json objects | jq '. | length'  
+show specific fields | jq '{id.orig_h,id.resp_h}'  
 
 ---
+
 ## Log Searching
 
-search keyword | grep "text" file
-recursive search | grep -r "text" .
-case insensitive search | grep -i "text" file
-count matches | grep -c "text" file
-show line numbers | grep -n "text" file
-exclude matches | grep -v "text" file
-search multiple files | grep "text" *.log 
+search keyword | grep "text" file  
+recursive search | grep -r "text" .  
+case insensitive search | grep -i "text" file  
+count matches | grep -c "text" file  
+show line numbers | grep -n "text" file  
+exclude matches | grep -v "text" file  
+search multiple files | grep "text" *.log  
 
 ---
 
 ## File Analysis
 
-detect file type | file filename
-detect piped data | file -
-view printable strings | strings file
-extract long strings | strings -n 10 file
-hex view file | xxd file
-view hex + ascii | hexdump -C file
-calculate file hash | sha256sum file
-calculate md5 hash | md5sum file
+detect file type | file filename  
+detect piped data | file -  
+view printable strings | strings file  
+extract long strings | strings -n 10 file  
+hex view file | xxd file  
+view hex + ascii | hexdump -C file  
+calculate file hash | sha256sum file  
+calculate md5 hash | md5sum file  
 
 ---
+
 ## Malware Analysis Basics
 
-find suspicious strings | strings malware.bin | grep http
-search command execution | strings file | grep "/bin"
-check for base64 blobs | strings file | grep -E "[A-Za-z0-9+/]{20,}={0,2}"
-check file entropy | ent file
+find suspicious strings | strings malware.bin | grep http  
+search command execution | strings file | grep "/bin"  
+check for base64 blobs | strings file | grep -E "[A-Za-z0-9+/]{20,}={0,2}"  
+check file entropy | ent file  
 
 ---
+
 ## Network Utilities
 
-show open ports | netstat -tulnp
-show listening ports | ss -tuln
-ping host | ping host
-trace network route | traceroute host
-dns lookup | dig domain.com
-reverse dns lookup | dig -x IP
+show open ports | netstat -tulnp  
+show listening ports | ss -tuln  
+ping host | ping host  
+trace network route | traceroute host  
+dns lookup | dig domain.com  
+reverse dns lookup | dig -x IP  
 
 ---
+
 ## File Extraction
 
-extract tar | tar -xvf file.tar
-extract tar.gz | tar -xvzf file.tar.gz
-extract gzip | gunzip file.gz
-extract zip | unzip file.zip
+extract tar | tar -xvf file.tar  
+extract tar.gz | tar -xvzf file.tar.gz  
+extract gzip | gunzip file.gz  
+extract zip | unzip file.zip  
 
 ---
+
 ## System Investigation
 
-list running processes | ps aux
-search running process | ps aux | grep process
-show disk usage | df -h
-show directory size | du -sh *
+list running processes | ps aux  
+search running process | ps aux | grep process  
+show disk usage | df -h  
+show directory size | du -sh *  
 
 ---
+
 ## Lab Utilities
 
-record terminal session | script lab_record.txt
-show command history | history
-save command history | history > commands.txt
-search history | history | grep command
+record terminal session | script lab_record.txt  
+show command history | history  
+save command history | history > commands.txt  
+search history | history | grep command  
