@@ -40,6 +40,7 @@ view ssl logs | cat ssl.log
 search ja3 fingerprint | grep "ja3" ssl.log  
 search domain requests | grep "server_name" ssl.log  
 search ip in logs | grep "192.168" conn.log  
+search zeek files.log for OCSP response with zeek-cut | cat /labs/bc/hancitor/files.log | zeek-cut tx_hosts rx_hosts mime_type analyzers extracted | grep ocsp-response | wc -l
 
 ---
 
@@ -63,6 +64,7 @@ count matches | grep -c "text" file
 show line numbers | grep -n "text" file  
 exclude matches | grep -v "text" file  
 search multiple files | grep "text" *.log  
+search for carved file names contain the string 'HTTP'? | ls -la /labs/bc/hancitor/extract_files/ | grep HTTP | wc -l
 
 ---
 
