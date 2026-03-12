@@ -34,6 +34,7 @@ filter http traffic | tshark -r capture.pcap -Y http
 ## Zeek Analysis
 
 generate zeek logs from pcap | zeek -r capture.pcap  
+extract_files | zeek -r capture.pcap /usr/local/zeek/share/zeek/policy/frameworks/files/extract-all-files.zeek
 view zeek connection logs | cat conn.log  
 view ssl logs | cat ssl.log  
 search ja3 fingerprint | grep "ja3" ssl.log  
@@ -84,6 +85,7 @@ find suspicious strings | strings malware.bin | grep http
 search command execution | strings file | grep "/bin"  
 check for base64 blobs | strings file | grep -E "[A-Za-z0-9+/]{20,}={0,2}"  
 check file entropy | ent file  
+Scan the EXE with clamscan | clamscan file
 
 ---
 
