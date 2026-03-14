@@ -128,3 +128,8 @@ record terminal session | script lab_record.txt
 show command history | history  
 save command history | history > commands.txt  
 search history | history | grep command  
+
+## Tricks
+
+grep to print the two lines immediately after any matches | -A 2  
+
