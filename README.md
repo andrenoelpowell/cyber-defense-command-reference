@@ -41,6 +41,8 @@ search ja3 fingerprint | grep "ja3" ssl.log
 search domain requests | grep "server_name" ssl.log  
 search ip in logs | grep "192.168" conn.log  
 search zeek files.log for OCSP response with zeek-cut | cat /labs/bc/hancitor/files.log | zeek-cut tx_hosts rx_hosts mime_type analyzers extracted | grep ocsp-response | wc -l
+extract PE32 executable and run SHA256 checksum | file /labs/bc/hancitor/extract_files/* | grep PE32 | sha256sum /labs/bc/hancitor/extract_files/extract-1712416202.373352-HTTP-FEJYPN3cj0jY5qVBP6
+Zeek's http.log, what domain name received the most connections? | cat /labs/bc/hancitor/http.log | zeek-cut host | sort | uniq -c | sort -n
 
 ---
 
@@ -76,7 +78,7 @@ view printable strings | strings file
 extract long strings | strings -n 10 file  
 hex view file | xxd file  
 view hex + ascii | hexdump -C file  
-calculate file hash | sha256sum file  
+calculate file hash | sha256sum file 
 calculate md5 hash | md5sum file  
 
 ---
