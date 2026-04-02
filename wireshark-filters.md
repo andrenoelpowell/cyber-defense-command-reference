@@ -14,7 +14,21 @@
 - exclude NetBIOS browser traffic | `not browser`
 - exclude Dropbox LAN sync | `not db-lsp-disc`
 
-- combined noise filter (lab baseline) | `!(ipv6 || tls || tcp.port==443 || ssdp || arp || lldp || llmnr || browser || db-lsp-disc)`  
+- combined noise filter (lab baseline) | `!(ipv6 || tls || tcp.port==443 || ssdp || arp || lldp || llmnr || browser || db-lsp-disc)`
+
+## DHCP / Network Attacks
+
+dhcp traffic | dhcp  
+dhcp requests only | dhcp.type == 1  
+dhcp offers only | dhcp.type == 2  
+dhcp request rate analysis | dhcp.type == 1  
+dhcp starvation pattern | dhcp.type == 1 (high volume + same src IP + rotating client MACs)  
+filter attacker host | ip.addr == 10.99.99.124 && dhcp.type == 1  
+invalid dhcp behavior (client has IP) | dhcp.type == 1 && ip.src != 0.0.0.0  
+dhcp client MAC field | bootp.hw.mac_addr  
+mac spoofing detection | eth.src != bootp.hw.mac_addr  
+broadcast dhcp requests | eth.dst == ff:ff:ff:ff:ff:ff && dhcp.type == 1  
+
 
 ## General
 
