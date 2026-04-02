@@ -57,7 +57,8 @@ broadcast dhcp requests | eth.dst == ff:ff:ff:ff:ff:ff && dhcp.type == 1
 - large packets (possible exfil) | `frame.len > 1000`
 - base64 indicator | `frame contains "=="`
 - suspicious user-agent (curl/python) | `http.user_agent contains "curl" or http.user_agent contains "python"`
-- detect DHCP starvation | dhcp.type == 1 + look for high rate requests + same src IP + rotating client MACs 
+- detect DHCP starvation | dhcp.type == 1 + look for high rate requests + same src IP + rotating client MACs
+- CAM overflow | many frames with ip.len==20, random IPs, and random source MACs used to flood the switch CAM table  
 
 ---
 
