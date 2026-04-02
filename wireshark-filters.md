@@ -2,6 +2,19 @@
 ## Wireshark Filters (One-Liners)
 
 ---
+## Noise Reduction / Filtering Known Good
+
+- exclude IPv6 traffic | `not ipv6`
+- exclude TLS traffic | `not tls`
+- exclude HTTPS port | `not tcp.port == 443`
+- exclude SSDP | `not ssdp`
+- exclude ARP | `not arp`
+- exclude LLDP | `not lldp`
+- exclude LLMNR | `not llmnr`
+- exclude NetBIOS browser traffic | `not browser`
+- exclude Dropbox LAN sync | `not db-lsp-disc`
+
+- combined noise filter (lab baseline) | `!(ipv6 || tls || tcp.port==443 || ssdp || arp || lldp || llmnr || browser || db-lsp-disc)`  
 
 ## General
 
