@@ -1,4 +1,4 @@
-# 🛡️ Cyber Defense Command Reference  
+  
 ## Wireshark Filters (One-Liners)
 
 ---
