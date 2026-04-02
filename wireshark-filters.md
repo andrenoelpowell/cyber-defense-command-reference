@@ -43,6 +43,7 @@
 - large packets (possible exfil) | `frame.len > 1000`
 - base64 indicator | `frame contains "=="`
 - suspicious user-agent (curl/python) | `http.user_agent contains "curl" or http.user_agent contains "python"`
+- detect DHCP starvation | dhcp.type == 1 + look for high rate requests + same src IP + rotating client MACs 
 
 ---
 
