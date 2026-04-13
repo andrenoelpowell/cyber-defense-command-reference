@@ -2,7 +2,7 @@
 ## Wireshark Filters (One-Liners)
 
 ---
-### Noise Reduction / Filtering Known Good
+## Noise Reduction / Filtering Known Good
 
 - exclude IPv6 traffic | `not ipv6`
 - exclude TLS traffic | `not tls`
@@ -15,30 +15,11 @@
 - exclude Dropbox LAN sync | `not db-lsp-disc` 
 - combined noise filter (lab baseline) | `!(ipv6 || tls || tcp.port==443 || ssdp || arp || lldp || llmnr || browser || db-lsp-disc)`
 
-### SNMP – Wireshark Filters
+## SNMP – Wireshark Filters
 snmp traffic | snmp  
 snmp port | udp.port == 161  
 snmp traps | udp.port == 162  
 snmp + tftp (config exfil) | snmp || tftp  
-
-## Nmap (SNMP)  
-
-snmp enumeration | nmap -sU -p 161 --script snmp-info <target>  
-snmp brute force | nmap -sU -p 161 --script snmp-brute <target>  
-snmp config pull | sudo nmap -sU -p 161 --script snmp-ios-config --script-args creds.snmp=:<community> <target>  
-
-## Metasploit (SNMP)  
-
-start metasploit | msfconsole  
-snmp enumeration | use auxiliary/scanner/snmp/snmp_enum; set RHOSTS <target>; run  
-snmp brute force | use auxiliary/scanner/snmp/snmp_login; set RHOSTS <target>; run  
-snmp config via tftp | use auxiliary/scanner/snmp/cisco_config_tftp; set RHOSTS <target>; set COMMUNITY <community>; set OUTPUTDIR /tmp; run  
-
-## Credential / Access  
-
-crack hashes | john passwords.txt  
-show cracked | john --show passwords.txt  
-ssh access | ssh user@target 
 
 
 ## DHCP / Network Attacks
