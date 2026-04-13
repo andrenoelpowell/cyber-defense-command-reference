@@ -2,7 +2,7 @@
 ## Wireshark Filters (One-Liners)
 
 ---
-## Noise Reduction / Filtering Known Good
+### Noise Reduction / Filtering Known Good
 
 - exclude IPv6 traffic | `not ipv6`
 - exclude TLS traffic | `not tls`
@@ -12,9 +12,14 @@
 - exclude LLDP | `not lldp`
 - exclude LLMNR | `not llmnr`
 - exclude NetBIOS browser traffic | `not browser`
-- exclude Dropbox LAN sync | `not db-lsp-disc`
-
+- exclude Dropbox LAN sync | `not db-lsp-disc` 
 - combined noise filter (lab baseline) | `!(ipv6 || tls || tcp.port==443 || ssdp || arp || lldp || llmnr || browser || db-lsp-disc)`
+
+### SNMP – Wireshark Filters
+snmp traffic | snmp  
+snmp port | udp.port == 161  
+snmp traps | udp.port == 162  
+snmp + tftp (config exfil) | snmp || tftp  
 
 ## DHCP / Network Attacks
 
