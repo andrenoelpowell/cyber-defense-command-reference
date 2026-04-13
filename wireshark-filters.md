@@ -34,6 +34,12 @@ snmp enumeration | use auxiliary/scanner/snmp/snmp_enum; set RHOSTS <target>; ru
 snmp brute force | use auxiliary/scanner/snmp/snmp_login; set RHOSTS <target>; run  
 snmp config via tftp | use auxiliary/scanner/snmp/cisco_config_tftp; set RHOSTS <target>; set COMMUNITY <community>; set OUTPUTDIR /tmp; run  
 
+## Credential / Access  
+
+crack hashes | john passwords.txt  
+show cracked | john --show passwords.txt  
+ssh access | ssh user@target 
+
 
 ## DHCP / Network Attacks
 
