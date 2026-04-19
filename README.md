@@ -83,7 +83,66 @@ search domain requests | grep "server_name" ssl.log
 search ip in logs | grep "192.168" conn.log  
 search zeek files.log for OCSP response with zeek-cut | cat /labs/bc/hancitor/files.log | zeek-cut tx_hosts rx_hosts mime_type analyzers extracted | grep ocsp-response | wc -l
 extract PE32 executable and run SHA256 checksum | file /labs/bc/hancitor/extract_files/* | grep PE32 | sha256sum /labs/bc/hancitor/extract_files/extract-1712416202.373352-HTTP-FEJYPN3cj0jY5qVBP6  
-Zeek's http.log, what domain name received the most connections? | cat /labs/bc/hancitor/http.log | zeek-cut host | sort | uniq -c | sort -n
+Zeek's http.log, what domain name received the most connections? | cat /labs/bc/hancitor/http.log | zeek-cut host | sort | uniq -c | sort -n  
+
+# --- ADD: SEC530 Lab 3.1 (NSM / DNS Tunneling Enhancements) ---
+
+## DNS Behavior & DGA Analysis (Zeek)
+
+extract DNS queries (clean list) | cat dns.log | zeek-cut query | sort -u  
+extract source of DNS queries (identify infected host) | cat dns.log | zeek-cut id.orig_h | sort -u  
+extract only hostname (strip TLD) | cat dns.log | zeek-cut query | sort -u | cut -d . -f1 > hostnames  
+analyze hostname length distribution (DGA detection) | for i in `cat hostnames`; do echo "${#i}"; done | sort | uniq -c | sort -rn -k 2  
+alternate length analysis (awk) | cat hostnames | awk '{ print length; }' | sort | uniq -c | sort -rn -k 2  
+detect high-entropy / random domains (quick view) | cat dns.log | zeek-cut query | head  
+
+---
+
+## DNS Tunneling Detection (Behavioral)
+
+count DNS queries (volume spike detection) | cat dns.log | wc -l  
+detect abnormal DNS record usage | cat dns.log | zeek-cut qtype_name | sort | uniq -c  
+check for tunneling patterns (TXT/MX/CNAME heavy) | cat dns.log | zeek-cut qtype qtype_name | sort | uniq -c  
+
+---
+
+## Time-Based DNS Analysis
+
+first DNS event | cat dns.log | zeek-cut -u ts | head -n 1  
+last DNS event | cat dns.log | zeek-cut -u ts | tail -n 1  
+
+---
+
+## Zeek Detection Automation (Lab-Specific)
+
+run zeek with DNS detection script | zeek -C -r dnstunnel.pcap ../dns-bad_behavior.bro  
+view zeek-generated alerts | cat notice.log  
+detect oversized DNS queries | grep "DNS::Oversized_Query" notice.log  
+
+---
+
+## Docker / Interface Visibility (CRITICAL)
+
+inspect container networking | docker container inspect externalattackerbox  
+identify correct capture interface | ifconfig -a | grep -C 2 '5.30.5.'  
+
+⚠️ docker0 does NOT see host ↔ container traffic  
+correct interface = br-<container_id>  
+
+---
+
+## Quick Threat Hunting (DNS C2 / Exfil)
+
+find likely compromised host | cat dns.log | zeek-cut id.orig_h | sort -u  
+detect DGA domains | cat dns.log | zeek-cut query | sort -u | head  
+detect DNS exfil (volume + entropy) | cat dns.log | wc -l && cat dns.log | zeek-cut query | head  
+
+---
+
+## Lab-Specific Insight Commands
+
+summarize connection states | cat conn.log | zeek-cut conn_state | sort | uniq -c  
+identify rejected connections | cat conn.log | zeek-cut id.resp_h id.resp_p conn_state | grep REJ  
 
 ---
 
